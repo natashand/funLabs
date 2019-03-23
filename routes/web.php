@@ -11,8 +11,6 @@
 |
 */
 
-use App\Http\Controllers\NewUserController;
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,8 +18,7 @@ Route::get('/', function () {
 Route::get('user/', 'NewUserController@index')->name('index');
 Route::get('user/create', 'NewUserController@create')->name('create');
 Route::post('user/store', 'NewUserController@store')->name('save');
-Route::get('user/edit/{id}', 'NewUserController@edit')->name('edit');
-Route::post('user/update/{id}', 'NewUserController@update')->name('update');
+Route::get('user/edit/{id?}', 'NewUserController@edit')->name('edit');
 Route::get('user/delete/{id}', 'NewUserController@destroy')->name('delete');
 
 

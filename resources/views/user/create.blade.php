@@ -7,7 +7,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="col-md-10 offset-md-1">
-                            <h3 class="style-header" style="padding-top: 40px">ADD NEW USER</h3>
+                            @if(empty($user->id))
+                                <h3 class="style-header" style="padding-top: 40px">ADD NEW USER</h3>
+                            @else
+                                <h3 class="style-header" style="padding-top: 40px">EDIT USER</h3>
+                            @endif
                         </div>
                         <div class="col-md-10 offset-md-1">
                             @if ($errors->any())
@@ -19,13 +23,13 @@
                                     </ul>
                                 </div><br />
                             @endif
-                            <form method="POST" action="{!! route('save') !!}">
+                            <form method="POST" action="{!! route('save', ['id' => $user->id]) !!}">
                                 @csrf
                                 <div class="form-group row">
                                     <div class="col-md-10 offset-md-1">
                                         <input id="name" type="name" placeholder="Enter your name"
                                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                               name="name" value="{{ old('email') }}" >
+                                               name="name" value="{{ $user->name }}" >
                                     </div>
                                 </div>
 
@@ -33,7 +37,7 @@
                                     <div class="col-md-10 offset-md-1">
                                         <input id="email" type="email" placeholder="Enter your email"
                                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                               name="email" value="{{ old('email') }}" >
+                                               name="email" value="{{ $user->email }}" >
                                     </div>
                                 </div>
 
@@ -57,6 +61,9 @@
                                     <div class="col-md-10 offset-md-1">
                                         <select name="role">
                                             <option disabled>Choice role</option>
+                                            @if(!empty($user->id))
+                                                <option value="{{$user->role}}">{{$user->role}}</option>
+                                                @endif
                                             <option value="admin">Admin</option>
                                             <option value="client">Client</option>
                                         </select>
